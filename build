@@ -1,0 +1,10 @@
+#!/bin/bash
+HOSTNAME=jenkins-server
+
+docker build -t pajak/matrix-postgres matrix-postgres-docker/
+
+docker build --build-arg SERVER_NAME=$HOSTNAME -t pajak/coturn coturn-docker/
+
+docker build --build-arg SERVER_NAME=$HOSTNAME --build-arg DEFAULT_HS_HOSTNAME=$HOSTNAME --build-arg RIOT_VERSION=v1.5.15 -t pajak/riot.im riot-web-docker/
+
+docker build --build-arg SERVER_NAME=$HOSTNAME --build-arg SYNAPSE_VERSION=v1.12.1rc1 -t  pajak/matrix-synapse matrix-synapse-docker/
